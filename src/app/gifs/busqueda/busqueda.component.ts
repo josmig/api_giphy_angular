@@ -20,9 +20,10 @@ export class BusquedaComponent{
     /* console.log(event.key); */
     /* console.log(termino); */
     const valor = this.txtBuscar.nativeElement.value;
-    /* console.log(valor); */
+    if(valor.trim().length === 0) return;
+
     this._gifsService.buscarGifs( valor );
-    
+
     this.txtBuscar.nativeElement.value= '';
     
     
