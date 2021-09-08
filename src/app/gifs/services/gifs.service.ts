@@ -24,6 +24,10 @@ export class GifsService {
     /* if( localStorage.getItem('historial')){
       this._historial = JSON.parse( localStorage.getItem('historial')!);
     } */
+
+
+    //cargando los ultimos resultados(busqueda)
+    this.resultados = JSON.parse(localStorage.getItem('resultados')!);
   }
 
 
@@ -47,6 +51,9 @@ export class GifsService {
       .subscribe( (respuesta) => {       
         console.log( respuesta.data );
         this.resultados = respuesta.data;
+
+        //Guardando los resultados para cuando se refresque la aplicación se pueda ver lo ultimo buscado
+        localStorage.setItem('resultados', JSON.stringify(this.resultados));
       });
 
   }
