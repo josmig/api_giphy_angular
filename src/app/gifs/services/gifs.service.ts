@@ -1,5 +1,5 @@
 import { SearchGifsResponse, Gif } from './../interfaces/gifs.interface';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,7 +7,9 @@ import { Injectable } from '@angular/core';
 })
 export class GifsService {
 
+  private servicioURL: string = 'https://api.giphy.com/v1/gifs';
   private api_key: string = 'n0MCAVNSMzWUnGH8lQzT1T0t2IpmDxnr';
+  private limit: number=10;
   private _historial: string[] = [];
   
   //TODO: Cambiar any por su tipo Interface
@@ -46,8 +48,16 @@ export class GifsService {
       //con esto se guarda en el localstorage
     }
     
+    const params = new HttpParams()
+      .set('api_key',this.api_key)
+      .set('limit',this.limit.toString())
+      .set('q',query);
+    console.log(params.toString());
+    
       //Forma de consumir en vez del fechAPI poque cuando ocurre un error tendriamos que hacer un monton de cosas mas
-     this.http.get<SearchGifsResponse>(`https://api.giphy.com/v1/gifs/search?api_key=n0MCAVNSMzWUnGH8lQzT1T0t2IpmDxnr&q=${query}&limit=10`)
+      /* https://api.giphy.com/v1/gifs/search?api_key=${this.api_key}&q=${query}&limit=10` */
+      //forma simplificada del serivicio url
+     this.http.get<SearchGifsResponse>(`${this.servicioURL}/search`,{ params })
       .subscribe( (respuesta) => {       
         console.log( respuesta.data );
         this.resultados = respuesta.data;
