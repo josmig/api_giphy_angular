@@ -59,9 +59,8 @@ export class GifsService {
       //forma simplificada del serivicio url
      this.http.get<SearchGifsResponse>(`${this.servicioURL}/search`,{ params })
       .subscribe( (respuesta) => {       
-        console.log( respuesta.data );
+        /* console.log( respuesta.data ); */
         this.resultados = respuesta.data;
-
         //Guardando los resultados para cuando se refresque la aplicación se pueda ver lo ultimo buscado
         localStorage.setItem('resultados', JSON.stringify(this.resultados));
       });
